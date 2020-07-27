@@ -374,7 +374,8 @@ class Mer(AtomSet):
     def rc(self):
         """Geometrical center of side chain (non-backbone atoms)."""
         non_backbone_coordinates = [a.vector for a in self.iter_nbb_atoms()]
-        vector = numpy.average(non_backbone_coordinates, 0)
+        with numpy.errstate(divide="raise", invalid="raise"):
+            vector = numpy.mean(non_backbone_coordinates, 0)
         return Pseudoatom(numpy_vec=vector, name="rc")
 
 
